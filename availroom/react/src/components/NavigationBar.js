@@ -46,7 +46,8 @@ const styles = StyleSheet.create({
     flex: 0.9,
     textAlign: 'center',
     textAlignVertical: 'center',
-    fontSize: 20,
+    fontSize: 16,
+    fontWeight: 'bold',
     color: 'black',
   },
 });

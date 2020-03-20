@@ -5,6 +5,7 @@ import {
   View,
   Text,
   Platform,
+  Alert,
   Picker,
 } from 'react-native';
 
@@ -60,6 +61,24 @@ const HomeScreen = props => {
     }
   };
 
+  //Function to initialize the Room List
+  const prepareInitialRoomList = () => {
+    let hour = time.getHours() < 10 ? '0' + time.getHours() : time.getHours();
+
+    //Round Selected time to nearest 30 mins slot
+    let minutes = time.getMinutes() <= 15 ? '00' : '30';
+
+    selectedSlot = hour + ':' + minutes;
+
+    console.log(selectedSlot);
+
+    if (sortBy === 'Availability') {
+      roomList = props.getRoomListSortByAvailability(selectedSlot).roomList;
+    } else {
+      roomList = props.getRoomListSortByCapacity(selectedSlot).roomList;
+    }
+  };
+
   /**
    *Fetch the base roomlist one time when the page is loaded.
    *The state gets maintained in Redux (roomListReducer)
@@ -68,37 +87,14 @@ const HomeScreen = props => {
     APIs.getRoomList(
       response => {
         props.initRoomList(response);
-        let hour =
-          time.getHours() < 10 ? '0' + time.getHours() : time.getHours();
-
-        //Round Selected time to nearest 30 mins slot
-        let minutes = time.getMinutes() <= 15 ? '00' : '30';
-
-        selectedSlot = hour + ':' + minutes;
-
-        console.log(selectedSlot);
-
-        if (sortBy === 'Availability') {
-          roomList = props.getRoomListSortByAvailability(selectedSlot).roomList;
-        } else {
-          roomList = props.getRoomListSortByCapacity(selectedSlot).roomList;
-        }
+        prepareInitialRoomList();
       },
-      error => {},
+      error => {
+        Alert.alert('Network Error !!! Please retry');
+      },
     ).then({});
   } else {
-    let hour = time.getHours() < 10 ? '0' + time.getHours() : time.getHours();
-
-    //Round Selected time to nearest 30 mins slot
-    let minutes = time.getMinutes() <= 15 ? '00' : '30';
-
-    selectedSlot = hour + ':' + minutes;
-
-    if (sortBy === 'Availability') {
-      roomList = props.getRoomListSortByAvailability(selectedSlot).roomList;
-    } else {
-      roomList = props.getRoomListSortByCapacity(selectedSlot).roomList;
-    }
+    prepareInitialRoomList();
   }
 
   const showMode = currentMode => {
@@ -200,9 +196,9 @@ const HomeScreen = props => {
           <Text style={styles.roomsText}>Rooms</Text>
 
           <View style={styles.sortByLayout}>
-            <Text style={{textAlignVertical: 'center'}}>Sort By</Text>
+            <Text style={styles.sortByText}>Sort By</Text>
             <Picker
-              style={{flex: 1}}
+              style={styles.pickerStyle}
               selectedValue={sortBy}
               onValueChange={(itemValue, itemIndex) => setSortBy(itemValue)}>
               <Picker.Item
@@ -260,6 +256,9 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
 
+  sortByText: {textAlignVertical: 'center', paddingRight: 10},
+
+  pickerStyle: {width: 120},
   textLabel: {
     fontSize: 12,
     color: 'rgba(100,100,100,0.6)',
