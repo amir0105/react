@@ -72,14 +72,11 @@ const HomeScreen = props => {
           time.getHours() < 10 ? '0' + time.getHours() : time.getHours();
 
         //Round Selected time to nearest 30 mins slot
-        let minutes =
-          time.getMinutes() < 10
-            ? '0' + time.getMinutes()
-            : time.getMinutes() <= 15
-            ? '00'
-            : '30';
+        let minutes = time.getMinutes() <= 15 ? '00' : '30';
 
         selectedSlot = hour + ':' + minutes;
+
+        console.log(selectedSlot);
 
         if (sortBy === 'Availability') {
           roomList = props.getRoomListSortByAvailability(selectedSlot).roomList;
@@ -93,12 +90,7 @@ const HomeScreen = props => {
     let hour = time.getHours() < 10 ? '0' + time.getHours() : time.getHours();
 
     //Round Selected time to nearest 30 mins slot
-    let minutes =
-      time.getMinutes() < 10
-        ? '0' + time.getMinutes()
-        : time.getMinutes() <= 15
-        ? '00'
-        : '30';
+    let minutes = time.getMinutes() <= 15 ? '00' : '30';
 
     selectedSlot = hour + ':' + minutes;
 
@@ -153,24 +145,14 @@ const HomeScreen = props => {
       let hour = twelveHrFormat < 10 ? '0' + twelveHrFormat : twelveHrFormat;
 
       //Round Selected time to nearest 30 mins slot
-      let minutes =
-        time.getMinutes() < 10
-          ? '0' + time.getMinutes()
-          : time.getMinutes() <= 15
-          ? '00'
-          : '30';
+      let minutes = time.getMinutes() <= 15 ? '00' : '30';
 
       selectedSlot = hour + ':' + minutes + ' PM';
     } else {
       let hour = time.getHours() < 10 ? '0' + time.getHours() : time.getHours();
 
       //Round Selected time to nearest 30 mins slot
-      let minutes =
-        time.getMinutes() < 10
-          ? '0' + time.getMinutes()
-          : time.getMinutes() <= 15
-          ? '00'
-          : '30';
+      let minutes = time.getMinutes() <= 15 ? '00' : '30';
 
       selectedSlot = hour + ':' + minutes + ' AM';
     }
