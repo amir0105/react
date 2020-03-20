@@ -4,7 +4,7 @@ import API from './APIBase';
 import Config from 'react-native-config';
 
 /**
- * API To Fetch RoomLists
+ * API To Fetch RoomLists from Server.
  */
 export const getRoomList = async (onResponse, onError) => {
   try {

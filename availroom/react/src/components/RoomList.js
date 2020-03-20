@@ -2,6 +2,10 @@ import React from 'react';
 import {View, StyleSheet, FlatList} from 'react-native';
 import ListItem from '../components/ListItem';
 
+/**
+ * FlatList that would render the Room List
+ * @param {*} param0
+ */
 const RoomList = ({roomList, selectedDate, selectedSlot, refresh}) => {
   var windowSize = 10;
 

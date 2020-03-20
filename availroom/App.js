@@ -9,6 +9,9 @@ import rootReducer from './react/src/redux/reducers';
 import thunk from 'redux-thunk';
 import {StatusBar} from 'react-native';
 import HomeScreen from './react/src/screens/HomeScreen';
+import WebViewScreen from './react/src/screens/WebViewScreen';
+
+import BarCodeScannerScreen from './react/src/components/BarcodeScanner';
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
@@ -16,13 +19,12 @@ const navigator = createStackNavigator(
   {
     Home: {
       screen: HomeScreen,
-      navigationOptions: {
-        headerStyle: {
-          backgroundColor: 'white',
-          elevation: 0, //remove shadow on Android
-          shadowOpacity: 0, //remove shadow on iOS
-        },
-      },
+    },
+    BarCodeScan: {
+      screen: BarCodeScannerScreen,
+    },
+    WebView: {
+      screen: WebViewScreen,
     },
   },
   {
